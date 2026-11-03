@@ -144,7 +144,7 @@ export const projects: Project[] = [
     problem:
       "A food donation app that connects donors and recipients. The base app was judged too basic, so an ML layer is being added to make it smarter about food safety and demand.",
     approach:
-      "Started in Flutter, then rebuilt as a responsive React web app, with Capacitor wrapping it for mobile. Donations follow a claim flow (Pending -> RequestAccepted -> Claimed). Planned, not built yet: a cooked-meal freshness classifier and donation-volume forecasting. A rule-based FSSAI safety layer comes first, a 50-60 image pilot dataset acts as a go/no-go gate before any CNN training, and Grad-CAM is planned for explainability.",
+      "Started in Flutter, then rebuilt as a responsive React web app, with Capacitor wrapping it for mobile. Donations follow a 4-phase claim flow: Post, Request, Pickup, Delivered. A recipient's request can be cancelled while it's still pending. Planned, not built yet: a cooked-meal freshness classifier and donation-volume forecasting. A rule-based FSSAI safety layer comes first, a 50-60 image pilot dataset acts as a go/no-go gate before any CNN training, and Grad-CAM is planned for explainability.",
     result:
       "In progress. The base app is built; the ML layer is still planned and not built yet.",
     signatureStat: { value: "4-phase", label: "claim flow" },
@@ -174,9 +174,10 @@ export const projects: Project[] = [
     diagram: {
       type: "flow",
       nodes: [
-        { label: "Pending" },
-        { label: "RequestAccepted" },
-        { label: "Claimed" },
+        { label: "1. Post", sub: "donor posts food, donation: available" },
+        { label: "2. Request", sub: "recipient requests it, claim: Pending" },
+        { label: "3. Pickup", sub: "donor accepts, then marks picked up, claim: RequestAccepted" },
+        { label: "4. Delivered", sub: "claim: Claimed, leaves the available lists" },
       ],
     },
   },
@@ -190,7 +191,7 @@ export const projects: Project[] = [
     featured: false,
     date: "2026-07-20",
     role: "Designed the MySQL schema by hand, wrote the rule-based risk logic, chose Isolation Forest, and came up with the drilling-animation login page. CRUD routes and styling were AI-assisted.",
-    team: "UNKNOWN",
+    team: "Solo",
     problem:
       "A mine safety dashboard that tracks gas, air quality, temperature and humidity across zones and raises alerts when readings look dangerous. It runs on simulated sensor data.",
     approach:
