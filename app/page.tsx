@@ -33,7 +33,7 @@ export default function Home() {
           </div>
           <div className="mt-6">
             <Link href="/projects" className={pill}>
-              View all projects →
+              View all projects (ranked or timeline) →
             </Link>
           </div>
         </section>

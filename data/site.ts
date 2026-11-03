@@ -4,7 +4,7 @@ export const site = {
   intro:
     "Final-year AI & ML diploma student. I build real ML projects and I'm always picking up something new.",
   // Small mono line under the intro. Set to null to hide it.
-  availability: "Looking for a remote ML internship",
+  availability: null as string | null,
 
   // Currently learning. Empty array = the whole section is hidden.
   // Example: { label: "Topic name", note: "optional short note" }
