@@ -9,6 +9,10 @@ import FlowDiagram from "@/components/FlowDiagram";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Skips Next's dev-time "instant navigation" check. Safe here: generateStaticParams
+// pre-builds every project page, so nothing is blocking for visitors.
+export const instant = false;
+
 // Tells Next to build one page per project in the data file
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));

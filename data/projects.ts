@@ -186,7 +186,7 @@ export const projects: Project[] = [
     slug: "pitguard",
     tagline: "An underground mine safety dashboard with ML hazard detection",
     category: "Web",
-    status: "in-progress",
+    status: "completed",
     tier: "solid",
     featured: false,
     date: "2026-07-20",
