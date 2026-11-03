@@ -23,7 +23,7 @@ export type Project = {
   challenges: string;
   learnings: string;
   links: { github: string | null }; // null = "Repository coming soon"
-  diagram?: { type: "mermaid" | "svg"; source: string };
+  diagram?: { type: "flow"; nodes: { label: string; sub?: string }[] };
   screenshots?: { src: string; caption: string }[]; // optional, hidden when empty
 };
 
@@ -49,7 +49,10 @@ export const projects: Project[] = [
     challenges: "DUMMY challenges.",
     learnings: "DUMMY learnings.",
     links: { github: "https://github.com/Katekar3" },
-    diagram: { type: "mermaid", source: "flowchart LR; A[Input] --> B[Model] --> C[Output]" },
+    diagram: {
+      type: "flow",
+      nodes: [{ label: "Input" }, { label: "Model", sub: "dummy step" }, { label: "Output" }],
+    },
   },
   {
     title: "Dummy Solid",
