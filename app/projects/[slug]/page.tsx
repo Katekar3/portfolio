@@ -43,7 +43,7 @@ export default async function ProjectPage({ params }: Props) {
   });
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-16">
+    <main className="mx-auto max-w-4xl px-6 py-16">
       <Link href="/projects" className="font-mono text-sm text-muted hover:text-foreground">
         ← All projects
       </Link>
