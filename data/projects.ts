@@ -232,5 +232,76 @@ export const projects: Project[] = [
       ],
     },
   },
+  {
+    title: "SkillBridge (SIH26044)",
+    slug: "skillbridge",
+    tagline: "A skill-gap matching platform with an explainable Placement Readiness Score",
+    category: "Web",
+    status: "upcoming",
+    tier: "upcoming",
+    featured: false,
+    date: "2026-09-01",
+    dateLabel: "Sept 2026",
+    role: "Team member. The Career Path Simulator is my signature feature.",
+    team: "The Outliers, 6 people, Govt Polytechnic Mumbai",
+    problem:
+      "A Smart India Hackathon project: an academia-industry portal that matches students' skills against what industry needs.",
+    approach:
+      "Planned, not built: skill-gap matching, an explainable Placement Readiness Score, a Career Path Simulator, peer benchmarking and a separate academician role. Planned stack is React, Tailwind, Supabase, and FastAPI with sentence-transformers.",
+    result:
+      "Idea and solution submitted. No prototype and no repository yet.",
+    signatureStat: { value: "Idea submitted", label: "Smart India Hackathon" },
+    accent: "#c084fc",
+    tech: ["React", "Tailwind", "Supabase", "FastAPI", "sentence-transformers"],
+    features: [
+      "Skill-gap matching (planned)",
+      "Explainable Placement Readiness Score (planned)",
+      "Career Path Simulator (planned)",
+      "Peer benchmarking (planned)",
+      "Separate academician role (planned)",
+    ],
+    challenges: "",
+    learnings: "",
+    links: { github: null },
+  },
+  {
+    title: "Learning path",
+    slug: "learning-path",
+    tagline: "Three small ML projects that got me from first CNN to a fine-tuned transformer",
+    category: "ML",
+    status: "completed",
+    tier: "foundation",
+    featured: false,
+    date: "2026-07-06",
+    dateLabel: "6-7 Jul 2026",
+    role: "Built all three classifiers and their Streamlit apps as learning projects.",
+    team: "UNKNOWN",
+    problem:
+      "Learn the fundamentals of deep learning by building and deploying three small classifiers.",
+    approach:
+      "An MNIST digit classifier and a Fashion-MNIST classifier, then a DistilBERT sentiment model fine-tuned with HuggingFace. Each one has a Streamlit app.",
+    result:
+      "MNIST: 98.24% accuracy. Fashion-MNIST: 90+% accuracy (exact figure unknown). DistilBERT sentiment: 88.4% accuracy.",
+    signatureStat: { value: "98.24% / 90+% / 88.4%", label: "MNIST / Fashion-MNIST / DistilBERT" },
+    accent: "#2dd4bf",
+    tech: ["Python", "CNNs", "HuggingFace", "DistilBERT", "Streamlit"],
+    features: [
+      "MNIST digit classifier (6 Jul)",
+      "Fashion-MNIST classifier (6 Jul)",
+      "DistilBERT sentiment analysis (7 Jul)",
+      "Streamlit app for each one",
+    ],
+    challenges: "",
+    learnings:
+      "Together they cover CNNs, DataLoaders, training loops, tokenization, the Trainer API and deployment.",
+    links: {
+      github: null,
+      extra: [
+        { label: "MNIST", url: "https://github.com/Katekar3/digit-recognizer" },
+        { label: "Fashion-MNIST", url: "https://github.com/Katekar3/fashion-recognizer" },
+        { label: "DistilBERT sentiment", url: "https://github.com/Katekar3/transformer-sentiment-analysis" },
+      ],
+    },
+  },
   // NEXT ENTRIES GO ABOVE THIS LINE
 ];
