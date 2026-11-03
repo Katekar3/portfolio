@@ -8,7 +8,7 @@ const statusLabel = {
 } as const;
 
 // The signature stat block: the big number, in the project's own accent color
-function Stat({ p }: { p: Project }) {
+export function Stat({ p }: { p: Project }) {
   return (
     <div
       className="inline-block rounded-xl border px-4 py-3"
@@ -22,7 +22,7 @@ function Stat({ p }: { p: Project }) {
   );
 }
 
-function TechBadges({ p, max }: { p: Project; max: number }) {
+export function TechBadges({ p, max }: { p: Project; max: number }) {
   return (
     <div className="flex flex-wrap gap-2">
       {p.tech.slice(0, max).map((t) => (
@@ -34,7 +34,7 @@ function TechBadges({ p, max }: { p: Project; max: number }) {
   );
 }
 
-function Meta({ p }: { p: Project }) {
+export function Meta({ p }: { p: Project }) {
   return (
     <div className="flex items-center gap-2 font-mono text-xs text-muted">
       <span>{p.category}</span>
