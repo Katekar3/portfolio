@@ -36,7 +36,7 @@ export default async function ProjectPage({ params }: Props) {
   const p = getProject(slug);
   if (!p) notFound();
 
-  const when = new Date(p.date).toLocaleDateString("en-US", {
+  const when = p.dateLabel ?? new Date(p.date).toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
     timeZone: "UTC",
@@ -56,7 +56,7 @@ export default async function ProjectPage({ params }: Props) {
 
       <div className="mt-6 flex flex-wrap items-center gap-4">
         <Stat p={p} />
-        {p.links.github ? (
+        {p.links.github && (
           <a
             href={p.links.github}
             target="_blank"
@@ -65,7 +65,19 @@ export default async function ProjectPage({ params }: Props) {
           >
             View on GitHub ↗
           </a>
-        ) : (
+        )}
+        {p.links.extra?.map((l) => (
+          <a
+            key={l.url}
+            href={l.url}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-border px-4 py-2 font-mono text-sm hover:border-muted"
+          >
+            {l.label} ↗
+          </a>
+        ))}
+        {!p.links.github && !p.links.extra?.length && (
           <span className="font-mono text-sm text-muted">Repository coming soon</span>
         )}
       </div>

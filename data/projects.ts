@@ -11,6 +11,7 @@ export type Project = {
   tier: Tier;
   featured: boolean; // true = shows on the homepage
   date: string; // "YYYY-MM-DD", drives the timeline order
+  dateLabel?: string; // optional display text like "Sept 2026" or "Ongoing"; date still sorts
   role: string;
   team: string;
   problem: string;
@@ -22,7 +23,10 @@ export type Project = {
   features: string[];
   challenges: string;
   learnings: string;
-  links: { github: string | null }; // null = "Repository coming soon"
+  links: {
+    github: string | null; // null = "Repository coming soon" (unless extra has links)
+    extra?: { label: string; url: string }[]; // optional extra repos, e.g. Foundations
+  };
   diagram?: { type: "flow"; nodes: { label: string; sub?: string }[] };
   screenshots?: { src: string; caption: string }[]; // optional, hidden when empty
 };
