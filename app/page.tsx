@@ -107,11 +107,6 @@ export default function Home() {
           <a href={site.links.linkedin} target="_blank" rel="noreferrer" className={pill}>
             LinkedIn ↗
           </a>
-          {site.links.resume && (
-            <a href={site.links.resume} target="_blank" rel="noreferrer" className={pill}>
-              Resume ↗
-            </a>
-          )}
         </div>
       </section>
     </main>
