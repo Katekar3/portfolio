@@ -85,7 +85,7 @@ export const projects: Project[] = [
     role: "Solo developer, end to end",
     team: "Solo",
     problem:
-      "A personal task-automation agent with a web UI, task queue, schedules and Telegram remote control, running 24/7 on my laptop as a background service.",
+      "Heavy projects were stacking up, and boilerplate plus copy-pasting code took a lot of my time. I first wanted to build my own LLM-based coding agent, but my hardware couldn't support it, so I shifted to features it could handle, like a parser and automations such as pasting code from the clipboard straight into files. That grew into a personal task-automation agent with a web UI, task queue, schedules and Telegram remote control, running 24/7 on my laptop as a background service. It made finishing my other projects easier and faster.",
     approach:
       "Flask backend with SSE streaming and a React/Vite UI. A tool-using agent loop rotates across Groq, Gemini and OpenRouter models, with 5 selectable gears (presets). A safety policy classifies every tool call as LOW, MEDIUM, HIGH or DENY under SAFE, ASSISTED or AUTONOMOUS modes, with approval cards. A SQLite queue and scheduler handle tasks.",
     result:
@@ -281,8 +281,8 @@ export const projects: Project[] = [
     approach:
       "An MNIST digit classifier and a Fashion-MNIST classifier, then a DistilBERT sentiment model fine-tuned with HuggingFace. Each one has a Streamlit app.",
     result:
-      "MNIST: 98.24% accuracy. Fashion-MNIST: 90+% accuracy (exact figure unknown). DistilBERT sentiment: 88.4% accuracy.",
-    signatureStat: { value: "98.24% / 90+% / 88.4%", label: "MNIST / Fashion-MNIST / DistilBERT" },
+      "MNIST: 98.24% accuracy. Fashion-MNIST: 90.54% accuracy. DistilBERT sentiment: 88.4% accuracy.",
+    signatureStat: { value: "98.24% / 90.54% / 88.4%", label: "MNIST / Fashion-MNIST / DistilBERT" },
     accent: "#2dd4bf",
     tech: ["Python", "CNNs", "HuggingFace", "DistilBERT", "Streamlit"],
     features: [
@@ -300,6 +300,50 @@ export const projects: Project[] = [
         { label: "MNIST", url: "https://github.com/Katekar3/digit-recognizer" },
         { label: "Fashion-MNIST", url: "https://github.com/Katekar3/fashion-recognizer" },
         { label: "DistilBERT sentiment", url: "https://github.com/Katekar3/transformer-sentiment-analysis" },
+      ],
+    },
+  },
+  {
+    title: "Road Damage Detection (YOLO11)",
+    slug: "road-damage-detection",
+    tagline: "A YOLO11 pothole and road-damage detector with measured scores and a dashcam video demo",
+    category: "ML",
+    status: "completed",
+    tier: "flagship",
+    featured: true,
+    date: "2026-11-03",
+    dateLabel: "Nov 2026",
+    role: "Solo, end to end. Everything was trained and run on free Google Colab (T4).",
+    team: "Solo",
+    problem:
+      "Build a baseline road-damage detector (mainly potholes) with honestly measured scores, plus a small decision layer on a dashcam video demo. The limits are stated on purpose: not field-tested on Indian roads, not real time, and no accuracy claim on video.",
+    approach:
+      "Trained a YOLO11n baseline, then YOLO11s, on the RDD2022 India data (4 classes: longitudinal, transverse and alligator cracks, and potholes). The India-only model barely worked on UK pothole photos (Kent dataset), so I fine-tuned on India + Kent. A confidence cutoff of 0.35 was chosen on validation, because a wrong box seemed worse than a missed pothole. The video demo adds ByteTrack tracking, an editable road-area filter, duplicate-ID merging and a transparent 0-100 severity score.",
+    result:
+      "YOLO11s on the India test set: mAP50 0.332 and pothole AP50 0.453. The default India + Kent model scores pothole AP50 0.413 on the India test and 0.218 on a held-out Kent test, up from 0.020 before fine-tuning. At the 0.35 cutoff about 4 in 10 potholes are found (recall 0.366 on India, 0.305 on Kent). Single runs, and the scores are slightly optimistic because the split comes from the Kaggle upload.",
+    signatureStat: { value: "0.413", label: "pothole AP50, India test" },
+    accent: "#818cf8",
+    tech: ["Python", "YOLO11", "Ultralytics", "ByteTrack", "Google Colab", "folium"],
+    features: [
+      "Detects 4 road-damage classes: longitudinal, transverse and alligator cracks, and potholes",
+      "Video demo with tracking, a road-area filter and duplicate-ID merging",
+      "Transparent severity score from 0 to 100 (size 50, confidence 30, persistence 20; the scales are my own assumptions)",
+      "Best-frame contact sheet and an approximate map (about 20-30 m) from the on-screen GPS overlay",
+      "Public repo with 5 Colab notebooks, result CSVs and figures; weights in a GitHub Release",
+    ],
+    challenges:
+      "A domain gap: the India-only model scored 0.020 pothole AP50 on UK photos. Early false alarms on a brick wall, kerbs and road markings had confidences of 0.41-0.62, above the cutoff, so I added a road-area filter instead of just raising the cutoff. Transverse cracks can't be judged (only 7 test boxes). The video is UK footage, with no confirmed pothole count or false-alarm rate, and one clear false alarm on a white road marking.",
+    learnings:
+      "Only claim what is built, a lesson carried over from the AnnaDaan demo. A road-area filter beats a higher cutoff when false alarms score high, and a test photo that was also in the training data makes a check unfair (leakage).",
+    links: { github: "https://github.com/Katekar3/road-damage-yolo" },
+    diagram: {
+      type: "flow",
+      nodes: [
+        { label: "Dashcam video", sub: "UK footage" },
+        { label: "YOLO11 + ByteTrack", sub: "every 2nd frame, min 3 hits" },
+        { label: "Road-area filter", sub: "editable polygon, duplicate IDs merged" },
+        { label: "Severity score", sub: "0-100, my own scales" },
+        { label: "Contact sheet + map", sub: "approximate GPS" },
       ],
     },
   },
