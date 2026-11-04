@@ -1,7 +1,7 @@
 export const site = {
   name: "Yashmit Katekar",
   // One-line intro under the name. Change freely.
-  intro: "Final-year AI & ML student. I ship projects, then learn from what broke.",
+  intro: "I build ML and software projects end to end, from waste classification to autonomous agents. I break things, work out why, and build them better.",
   // Small mono line under the intro. Set to null to hide it.
   availability: null as string | null,
 
