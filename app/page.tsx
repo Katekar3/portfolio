@@ -70,12 +70,13 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* Hidden below lg, so phones and tablets never load three.js */}
-        <Reveal delay={0.3} className="relative hidden h-[420px] lg:block">
+        {/* Shown on every screen: below the text on phones, to the right on desktop.
+            three.js only downloads once this box scrolls into view. */}
+        <Reveal delay={0.3} className="relative h-[300px] sm:h-[360px] lg:h-[420px]">
           {/* Soft amber glow behind the orbit (pure CSS) */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -inset-8"
+            className="pointer-events-none absolute -inset-4 lg:-inset-8"
             style={{
               background:
                 "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.16), transparent 65%)",
