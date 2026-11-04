@@ -32,7 +32,8 @@ export type Project = {
   growth?: { title: string; steps: { label: string; value: number }[] }; // optional bar strip, values are percentages
   ladder?: {
     modes: string[]; // column headers, e.g. ["SAFE", "ASSISTED", "AUTONOMOUS"]
-    levels: { level: string; cells: ("auto" | "ask" | "block")[] }[]; // one cell per mode, in the same order
+    note?: string; // optional footnote under the grid
+    levels: { level: string; detail?: string; cells: ("auto" | "ask" | "mixed" | "block")[] }[]; // one cell per mode, in the same order
   }; // optional, hidden when empty
 };
 
@@ -132,6 +133,32 @@ export const projects: Project[] = [
       "Free-tier rate limits, solved by auto-rotating to the next model. The agent also got stuck repeating failing tool calls, so I added a loop guard that nudges it first, then stops and asks.",
     learnings:
       "An agent needs guardrails: a safety policy that classifies every tool call, and a loop guard that nudges the agent and then stops to ask when it keeps repeating a failing call. Free-tier rate limits were solved by rotating to the next model automatically. And scoping down to what my hardware could run is what got the project finished.",
+    ladder: {
+      modes: ["SAFE", "ASSISTED", "AUTONOMOUS"],
+      note: "Every action is rated, and risky ones wait for approval. HIGH asks in every mode, even AUTONOMOUS, and DENY can't be approved from anywhere, including the phone. In SAFE mode only pure reads (reading files, listing folders, searching, read-only commands like git status) run on their own. If nobody answers an approval, it counts as no. The shell-command rating is heuristic, so this is a safety net, not a guarantee.",
+      levels: [
+        {
+          level: "LOW",
+          detail: "reads, normal source edits, allow-listed commands, web search",
+          cells: ["mixed", "auto", "auto"],
+        },
+        {
+          level: "MEDIUM",
+          detail: "deleting files, editing config, git add/commit, draft emails, schedules",
+          cells: ["ask", "ask", "auto"],
+        },
+        {
+          level: "HIGH",
+          detail: "unlisted shell commands, shell operators, fetching a URL",
+          cells: ["ask", "ask", "ask"],
+        },
+        {
+          level: "DENY",
+          detail: "paths outside the project, secret files, destructive commands, malformed calls",
+          cells: ["block", "block", "block"],
+        },
+      ],
+    },
     links: { github: null },
     diagram: {
       type: "flow",
