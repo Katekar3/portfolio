@@ -45,7 +45,7 @@ export default function GrowthStrip({ growth, accent }: { growth: Growth; accent
 
     animate(deltas, {
       opacity: [0, 1],
-      delay: (_el, i) => 900 + i * 250,
+      delay: stagger(250, { start: 900 }),
       duration: 400,
     });
   });

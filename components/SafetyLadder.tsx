@@ -17,7 +17,7 @@ const labels: Record<Cell, string> = {
 // When it scrolls into view, the pills pop in row by row (scale + fade only, no sideways
 // movement, so the table never gets wider and the mobile scroll box stays the same).
 export default function SafetyLadder({ ladder, accent }: { ladder: Ladder; accent: string }) {
-  const ref = useAnimeOnView<HTMLDivElement>((root, { animate }) => {
+  const ref = useAnimeOnView<HTMLDivElement>((root, { animate, stagger }) => {
     const pills = Array.from(root.querySelectorAll<HTMLElement>("[data-pill]"));
     pills.forEach((p) => {
       p.style.opacity = "0";
@@ -28,7 +28,7 @@ export default function SafetyLadder({ ladder, accent }: { ladder: Ladder; accen
       opacity: [0, 1],
       scale: [0.6, 1],
       // pills come in row-major order, so this reads top-left to bottom-right
-      delay: (_el: unknown, i: number) => i * 70,
+      delay: stagger(70),
       duration: 500,
       ease: "outBack",
     });
