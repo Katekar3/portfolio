@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProjectCard from "@/components/ProjectCard";
 import { getFeatured } from "@/lib/projects";
+import Timeline from "@/components/Timeline";
 import { site } from "@/data/site";
 
 const pill =
@@ -33,11 +34,19 @@ export default function Home() {
           </div>
           <div className="mt-6">
             <Link href="/projects" className={pill}>
-              View all projects (ranked or timeline) →
+              View all projects →
             </Link>
           </div>
         </section>
       )}
+
+      {/* Timeline: how the projects fit together, oldest to newest */}
+      <section className="mt-16">
+        <h2 className="mb-6 font-mono text-sm uppercase tracking-widest text-muted">
+          How I got here
+        </h2>
+        <Timeline />
+      </section>
 
       {/* Currently learning: hidden when the array is empty */}
       {site.learning.length > 0 && (
