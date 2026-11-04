@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 import Timeline from "@/components/Timeline";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
@@ -12,25 +13,27 @@ export default function Home() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
-      {/* Hero */}
+      {/* Hero: three groups that fade up one after another */}
       <header>
-        {site.nowBuilding && (
-          <Link
-            href={`/projects/${site.nowBuilding.slug}`}
-            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 font-mono text-xs text-muted hover:border-muted"
-          >
-            <span className="h-2 w-2 rounded-full bg-amber-500" />
-            Now building: {site.nowBuilding.text}
-          </Link>
-        )}
+        <Reveal>
+          {site.nowBuilding && (
+            <Link
+              href={`/projects/${site.nowBuilding.slug}`}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 font-mono text-xs text-muted hover:border-muted"
+            >
+              <span className="h-2 w-2 rounded-full bg-amber-500" />
+              Now building: {site.nowBuilding.text}
+            </Link>
+          )}
 
-        <h1 className="mt-5 text-4xl font-bold sm:text-5xl">{site.name}</h1>
-        <p className="mt-4 max-w-2xl text-lg text-muted">{site.intro}</p>
-        {site.availability && (
-          <p className="mt-3 font-mono text-sm text-muted">{site.availability}</p>
-        )}
+          <h1 className="mt-5 text-4xl font-bold sm:text-5xl">{site.name}</h1>
+          <p className="mt-4 max-w-2xl text-lg text-muted">{site.intro}</p>
+          {site.availability && (
+            <p className="mt-3 font-mono text-sm text-muted">{site.availability}</p>
+          )}
+        </Reveal>
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <Reveal delay={0.1} className="mt-6 flex flex-wrap gap-3">
           <Link href="/projects" className={pill}>
             View projects →
           </Link>
@@ -39,9 +42,9 @@ export default function Home() {
               Resume ↗
             </a>
           )}
-        </div>
+        </Reveal>
 
-        <div className="mt-8 flex flex-wrap gap-6 font-mono">
+        <Reveal delay={0.2} className="mt-8 flex flex-wrap gap-6 font-mono">
           <div>
             <div className="text-2xl font-bold">{shipped}</div>
             <div className="text-xs text-muted">projects shipped</div>
@@ -52,7 +55,7 @@ export default function Home() {
               <div className="text-xs text-muted">{site.highlight.label}</div>
             </div>
           )}
-        </div>
+        </Reveal>
       </header>
 
       {/* Timeline: the story, oldest to newest. Cards link to the detail pages. */}
