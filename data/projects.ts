@@ -328,7 +328,7 @@ export const projects: Project[] = [
       "MNIST: 98.24% accuracy. Fashion-MNIST: 90.54% accuracy. DistilBERT sentiment: 88.4% accuracy.",
     signatureStat: { value: "98.24% / 90.54% / 88.4%", label: "MNIST / Fashion-MNIST / DistilBERT" },
     accent: "#2dd4bf",
-    tech: ["Python", "CNNs", "HuggingFace", "DistilBERT", "Streamlit"],
+    tech: ["Python", "PyTorch", "CNNs", "HuggingFace", "DistilBERT", "Streamlit"],
     features: [
       "MNIST digit classifier (6 Jul)",
       "Fashion-MNIST classifier (6 Jul)",
