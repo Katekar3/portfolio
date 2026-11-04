@@ -15,6 +15,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio-3109.vercel.app"),
+  openGraph: {
+    title: "Yashmit Katekar | AI & ML Portfolio",
+    description:
+      "Portfolio of Yashmit Katekar, a final-year AI & ML diploma student. Real ML and web projects, with the problem, approach and result for each.",
+    type: "website",
+  },
   title: "Yashmit Katekar | AI & ML Portfolio",
   description:
     "Portfolio of Yashmit Katekar, a final-year AI & ML diploma student. Real ML and web projects, with the problem, approach and result for each.",

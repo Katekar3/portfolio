@@ -6,6 +6,8 @@ import { projects } from "@/data/projects";
 import { getProject } from "@/lib/projects";
 import { Meta, Stat, TechBadges } from "@/components/ProjectCard";
 import FlowDiagram from "@/components/FlowDiagram";
+import GrowthStrip from "@/components/GrowthStrip";
+import SafetyLadder from "@/components/SafetyLadder";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -106,6 +108,18 @@ export default async function ProjectPage({ params }: Props) {
       {p.diagram && (
         <Section title="How it fits together" accent={p.accent}>
           <FlowDiagram diagram={p.diagram} accent={p.accent} />
+        </Section>
+      )}
+
+      {p.growth && (
+        <Section title={p.growth.title} accent={p.accent}>
+          <GrowthStrip growth={p.growth} accent={p.accent} />
+        </Section>
+      )}
+
+      {p.ladder && (
+        <Section title="Safety ladder" accent={p.accent}>
+          <SafetyLadder ladder={p.ladder} accent={p.accent} />
         </Section>
       )}
 

@@ -29,6 +29,11 @@ export type Project = {
   };
   diagram?: { type: "flow"; nodes: { label: string; sub?: string }[] };
   screenshots?: { src: string; caption: string }[]; // optional, hidden when empty
+  growth?: { title: string; steps: { label: string; value: number }[] }; // optional bar strip, values are percentages
+  ladder?: {
+    modes: string[]; // column headers, e.g. ["SAFE", "ASSISTED", "AUTONOMOUS"]
+    levels: { level: string; cells: ("auto" | "ask" | "block")[] }[]; // one cell per mode, in the same order
+  }; // optional, hidden when empty
 };
 
 export const projects: Project[] = [
@@ -60,8 +65,17 @@ export const projects: Project[] = [
     ],
     challenges:
       "Streamlit bugs: CSS leaking out as text, camera Stop-button lag, and a theme toggle crash. Also, a glass tumbler was misclassified because of a domain gap in the dataset.",
-    learnings: "",
+    learnings:
+      "Transfer learning made the biggest jump, from 69.7% for my baseline CNN to 84.3% with an early MobileNetV2, and combining the team's winning ideas got it to 92.99%. A strong test score doesn't guarantee real-world behaviour: the glass tumbler was misclassified because of a domain gap in the dataset. Wiring the model into Streamlit brought its own bugs, so the app needed debugging too, not just the model.",
     links: { github: "https://github.com/Katekar3/waste-classifier" },
+    growth: {
+      title: "Accuracy at three stages",
+      steps: [
+        { label: "Baseline CNN", value: 69.7 },
+        { label: "Early MobileNetV2", value: 84.3 },
+        { label: "Final config + 5-crop TTA", value: 92.99 },
+      ],
+    },
     diagram: {
       type: "flow",
       nodes: [
@@ -116,7 +130,8 @@ export const projects: Project[] = [
     ],
     challenges:
       "Free-tier rate limits, solved by auto-rotating to the next model. The agent also got stuck repeating failing tool calls, so I added a loop guard that nudges it first, then stops and asks.",
-    learnings: "",
+    learnings:
+      "An agent needs guardrails: a safety policy that classifies every tool call, and a loop guard that nudges the agent and then stops to ask when it keeps repeating a failing call. Free-tier rate limits were solved by rotating to the next model automatically. And scoping down to what my hardware could run is what got the project finished.",
     links: { github: null },
     diagram: {
       type: "flow",
@@ -169,7 +184,8 @@ export const projects: Project[] = [
     ],
     challenges:
       "signInWithPopup breaks inside the Capacitor WebView, fixed by switching to @capgo/capacitor-social-login. GitHub also flagged a leaked Google API key, so I rotated it and moved it to .env.local.",
-    learnings: "",
+    learnings:
+      "Web code can behave differently inside a Capacitor WebView: Google sign-in only worked after switching to a native plugin. A leaked API key flagged by GitHub taught me to rotate it and keep secrets in .env.local. The professor's feedback that the base app was too basic is why the ML layer is being planned.",
     links: { github: "https://github.com/Muktacore/annadaan-web" },
     diagram: {
       type: "flow",
@@ -219,7 +235,8 @@ export const projects: Project[] = [
       "Schema covering zones, workers, sensor readings, alerts and users",
     ],
     challenges: "",
-    learnings: "",
+    learnings:
+      "With simulated data, any labels would only come from my own thresholds, so an unsupervised model (Isolation Forest) was the honest choice over a supervised one. I designed the schema and the risk logic by hand, and let AI help with the routine CRUD routes and styling.",
     links: { github: "https://github.com/Katekar3/pitguard" },
     diagram: {
       type: "flow",
