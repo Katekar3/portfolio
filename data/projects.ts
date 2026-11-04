@@ -104,7 +104,7 @@ export const projects: Project[] = [
     approach:
       "Flask backend with SSE streaming and a React/Vite UI. A tool-using agent loop rotates across Groq, Gemini and OpenRouter models, with 5 selectable gears (presets). A safety policy classifies every tool call as LOW, MEDIUM, HIGH or DENY under SAFE, ASSISTED or AUTONOMOUS modes, with approval cards. A SQLite queue and scheduler handle tasks.",
     result:
-      "v1 complete (finished around 11 Oct 2026). Repository is being cleaned up with fixes before it goes public.",
+      "v1 complete (finished around 11 Oct 2026).",
     signatureStat: { value: "3 providers", label: "5 gears · 3 autonomy modes" },
     accent: "#f59e0b",
     tech: [
@@ -159,7 +159,7 @@ export const projects: Project[] = [
         },
       ],
     },
-    links: { github: null },
+    links: { github: "https://github.com/Katekar3/coding-agent" },
     diagram: {
       type: "flow",
       nodes: [
