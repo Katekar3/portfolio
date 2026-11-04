@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { about } from "@/data/about";
-import Avatar from "@/components/Avatar";
+import AboutAvatar from "@/components/AboutAvatar";
+import { site } from "@/data/site";
+import { getProject } from "@/lib/projects";
 
 export const metadata: Metadata = { title: "About | Yashmit Katekar" };
 
@@ -22,10 +24,44 @@ export default function AboutPage() {
           {about.headingTo && <p>{about.headingTo}</p>}
         </div>
 
-        {/* Mascot, not my face. Follows the cursor on desktop, static on touch. */}
-        <div className="shrink-0 text-center">
-          <Avatar size={150} />
-          <p className="mt-3 font-mono text-xs text-muted">Yes, he follows your cursor.</p>
+        {/* Cartoon avatar + two small chips + the license credit */}
+        <div className="flex shrink-0 flex-col items-center gap-3 text-center">
+          <AboutAvatar size={160} />
+
+          <div className="flex flex-wrap justify-center gap-2">
+            <span className="rounded-full border border-border px-2.5 py-1 font-mono text-xs text-foreground/80">
+              Class of 2027
+            </span>
+            {site.nowBuilding && (
+              <Link
+                href={`/projects/${site.nowBuilding.slug}`}
+                className="rounded-full border border-amber-400/40 px-2.5 py-1 font-mono text-xs text-amber-300 hover:border-amber-400"
+              >
+                Now building {getProject(site.nowBuilding.slug)?.title ?? site.nowBuilding.text}
+              </Link>
+            )}
+          </div>
+
+          <p className="max-w-[14rem] font-mono text-[11px] leading-snug text-muted">
+            Avatar: Adventurer by{" "}
+            <a
+              href="https://www.figma.com/community/file/1184595184137881796"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-foreground"
+            >
+              Lisa Wischofsky
+            </a>
+            ,{" "}
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              rel="noreferrer"
+              className="underline hover:text-foreground"
+            >
+              CC BY 4.0
+            </a>
+          </p>
         </div>
       </div>
 
