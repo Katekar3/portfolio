@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import type { Project } from "@/data/projects";
 
 const statusLabel = {
@@ -46,13 +47,18 @@ export function Meta({ p }: { p: Project }) {
 
 export default function ProjectCard({ project: p }: { project: Project }) {
   const href = `/projects/${p.slug}`;
+
+  // Hover: border and a soft glow take the project's own accent color.
+  // The color is passed as a CSS variable so Tailwind classes can use it.
+  // With "reduce motion" the card stops lifting and the transition is off.
+  const style = { "--accent": p.accent + "aa" } as CSSProperties;
   const base =
-    "block rounded-2xl border bg-card transition hover:-translate-y-0.5 hover:border-muted";
+    "block rounded-2xl border bg-card transition hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-[0_10px_30px_-14px_var(--accent)] motion-reduce:transition-none motion-reduce:hover:translate-y-0";
 
   // FLAGSHIP: big card with Problem → Approach → Result
   if (p.tier === "flagship") {
     return (
-      <Link href={href} className={`${base} border-border p-6 sm:p-8`}>
+      <Link href={href} style={style} className={`${base} border-border p-6 sm:p-8`}>
         <Meta p={p} />
         <h3 className="mt-3 text-2xl font-semibold">{p.title}</h3>
         <p className="mt-1 text-muted">{p.tagline}</p>
@@ -79,7 +85,7 @@ export default function ProjectCard({ project: p }: { project: Project }) {
   // SOLID: medium card
   if (p.tier === "solid") {
     return (
-      <Link href={href} className={`${base} border-border p-5`}>
+      <Link href={href} style={style} className={`${base} border-border p-5`}>
         <Meta p={p} />
         <h3 className="mt-2 text-lg font-semibold">{p.title}</h3>
         <p className="mt-1 line-clamp-2 text-sm text-muted">{p.tagline}</p>
@@ -94,6 +100,7 @@ export default function ProjectCard({ project: p }: { project: Project }) {
     return (
       <Link
         href={href}
+        style={style}
         className={`${base} flex flex-col gap-2 border-border p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4`}
       >
         <div>
@@ -109,7 +116,7 @@ export default function ProjectCard({ project: p }: { project: Project }) {
 
   // UPCOMING: low prominence, dashed border
   return (
-    <Link href={href} className={`${base} border-dashed border-border p-4 opacity-80`}>
+    <Link href={href} style={style} className={`${base} border-dashed border-border p-4 opacity-80 hover:opacity-100`}>
       <Meta p={p} />
       <h3 className="mt-1 font-semibold">{p.title}</h3>
       <p className="text-sm text-muted">{p.tagline}</p>

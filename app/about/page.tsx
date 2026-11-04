@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { about } from "@/data/about";
+import Avatar from "@/components/Avatar";
 
 export const metadata: Metadata = { title: "About | Yashmit Katekar" };
 
@@ -13,11 +14,19 @@ export default function AboutPage() {
 
       <h1 className="mt-8 text-4xl font-bold">About me</h1>
 
-      <div className="mt-6 max-w-2xl space-y-4 leading-relaxed text-foreground/80">
-        {about.paragraphs.map((text) => (
-          <p key={text}>{text}</p>
-        ))}
-        {about.headingTo && <p>{about.headingTo}</p>}
+      <div className="mt-6 flex flex-col gap-10 sm:flex-row sm:items-center sm:justify-between">
+        <div className="max-w-2xl space-y-4 leading-relaxed text-foreground/80">
+          {about.paragraphs.map((text) => (
+            <p key={text}>{text}</p>
+          ))}
+          {about.headingTo && <p>{about.headingTo}</p>}
+        </div>
+
+        {/* Mascot, not my face. Follows the cursor on desktop, static on touch. */}
+        <div className="shrink-0 text-center">
+          <Avatar size={150} />
+          <p className="mt-3 font-mono text-xs text-muted">Yes, he follows your cursor.</p>
+        </div>
       </div>
 
       <section className="mt-14">

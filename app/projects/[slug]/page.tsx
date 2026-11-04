@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { projects } from "@/data/projects";
-import { getProject } from "@/lib/projects";
+import { getProject, getTimeline } from "@/lib/projects";
 import { Meta, Stat, TechBadges } from "@/components/ProjectCard";
 import AnimatedFlow from "@/components/AnimatedFlow";
 import GrowthStrip from "@/components/GrowthStrip";
@@ -43,6 +43,12 @@ export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
   const p = getProject(slug);
   if (!p) notFound();
+
+  // Prev/next follow the timeline order (same story as the home page)
+  const order = getTimeline();
+  const idx = order.findIndex((x) => x.slug === p.slug);
+  const prev = idx > 0 ? order[idx - 1] : null;
+  const next = idx >= 0 && idx < order.length - 1 ? order[idx + 1] : null;
 
   const when = p.dateLabel ?? new Date(p.date).toLocaleDateString("en-US", {
     month: "short",
@@ -153,6 +159,33 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </Section>
       )}
+
+      <nav aria-label="More projects" className="mt-16 grid gap-4 border-t border-border pt-8 sm:grid-cols-2">
+        {prev ? (
+          <Link
+            href={`/projects/${prev.slug}`}
+            className="rounded-2xl border border-border bg-card p-4 transition hover:border-[var(--accent)]"
+            style={{ "--accent": prev.accent } as CSSProperties}
+          >
+            <div className="font-mono text-xs text-muted">← Earlier</div>
+            <div className="mt-1 font-semibold">{prev.title}</div>
+          </Link>
+        ) : (
+          <div />
+        )}
+        {next ? (
+          <Link
+            href={`/projects/${next.slug}`}
+            className="rounded-2xl border border-border bg-card p-4 transition hover:border-[var(--accent)] sm:text-right"
+            style={{ "--accent": next.accent } as CSSProperties}
+          >
+            <div className="font-mono text-xs text-muted">Later →</div>
+            <div className="mt-1 font-semibold">{next.title}</div>
+          </Link>
+        ) : (
+          <div />
+        )}
+      </nav>
     </main>
   );
 }
