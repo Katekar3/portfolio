@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import type { Item, Variant } from "./Scene";
+import type { Item } from "./Scene";
 
 // Plain code-built stand-in: shown while the 3D loads, with "reduce motion", and when WebGL is missing.
 function Fallback() {
@@ -22,21 +22,10 @@ function Fallback() {
 // three.js is downloaded only when this chunk is actually needed (lazy).
 const Scene = dynamic(() => import("./Scene"), { ssr: false, loading: () => <Fallback /> });
 
-const NAMES: Record<Variant, string> = { 1: "1 · Orbit", 2: "2 · Network", 3: "3 · Logo" };
-
-export default function Hero3D({
-  items,
-  variant = 1,
-  showSwitcher = false,
-}: {
-  items: Item[];
-  variant?: Variant;
-  showSwitcher?: boolean;
-}) {
+export default function Hero3D({ items }: { items: Item[] }) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"static" | "3d">("static");
   const [active, setActive] = useState(true);
-  const [v, setV] = useState<Variant>(variant);
   const [hover, setHover] = useState<Item | null>(null);
 
   // 3D only on desktop, never with "reduce motion", never without WebGL, and only after a short delay.
@@ -63,33 +52,13 @@ export default function Hero3D({
   return (
     <div ref={boxRef} className="relative h-full w-full">
       <div aria-hidden className="h-full w-full">
-        {mode === "3d" ? <Scene variant={v} items={items} onHover={setHover} active={active} /> : <Fallback />}
+        {mode === "3d" ? <Scene items={items} onHover={setHover} active={active} /> : <Fallback />}
       </div>
 
-      {mode === "3d" && v === 1 && hover && (
+      {mode === "3d" && hover && (
         <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-border bg-card px-3 py-1 font-mono text-xs">
           {hover.title}
           {hover.upcoming ? " · up next" : ""}
-        </div>
-      )}
-
-      {showSwitcher && (
-        <div className="absolute right-3 top-3 flex gap-1">
-          {([1, 2, 3] as Variant[]).map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => {
-                setHover(null);
-                setV(n);
-              }}
-              className={`rounded-full border px-3 py-1 font-mono text-xs ${
-                v === n ? "border-muted text-foreground" : "border-border text-muted hover:border-muted"
-              }`}
-            >
-              {NAMES[n]}
-            </button>
-          ))}
         </div>
       )}
     </div>

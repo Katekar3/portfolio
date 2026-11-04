@@ -16,10 +16,10 @@ export default function LabPage() {
     <main className="mx-auto w-full max-w-5xl px-6 py-12">
       <h1 className="text-2xl font-bold">3D lab</h1>
       <p className="mt-2 text-sm text-muted">
-        Temporary test page. Desktop only (open it on your laptop). Use the buttons to switch between the three ideas.
+        Temporary test page. Desktop only (open it on your laptop).
       </p>
       <div className="mt-6 h-[540px] rounded-2xl border border-border bg-card">
-        <Hero3D items={items} showSwitcher />
+        <Hero3D items={items} />
       </div>
     </main>
   );
