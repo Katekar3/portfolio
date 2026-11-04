@@ -3,6 +3,7 @@ import CountUp from "@/components/CountUp";
 import Hero3D from "@/components/hero3d/Hero3D";
 import Reveal from "@/components/Reveal";
 import Timeline from "@/components/Timeline";
+import WhatBroke from "@/components/WhatBroke";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
@@ -70,7 +71,16 @@ export default function Home() {
         </div>
 
         {/* Hidden below lg, so phones and tablets never load three.js */}
-        <Reveal delay={0.3} className="hidden h-[420px] lg:block">
+        <Reveal delay={0.3} className="relative hidden h-[420px] lg:block">
+          {/* Soft amber glow behind the orbit (pure CSS) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-8"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 50%, rgba(245,158,11,0.16), transparent 65%)",
+            }}
+          />
           <Hero3D items={orbitItems} />
         </Reveal>
       </header>
@@ -87,6 +97,9 @@ export default function Home() {
           </Link>
         </div>
       </section>
+
+      {/* What broke: short, true lines from the projects (data/broke.ts) */}
+      <WhatBroke />
 
       {/* Currently learning: hidden when the array is empty */}
       {site.learning.length > 0 && (
