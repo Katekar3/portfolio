@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CountUp from "@/components/CountUp";
 import Reveal from "@/components/Reveal";
 import Timeline from "@/components/Timeline";
 import { projects } from "@/data/projects";
@@ -46,12 +47,12 @@ export default function Home() {
 
         <Reveal delay={0.2} className="mt-8 flex flex-wrap gap-6 font-mono">
           <div>
-            <div className="text-2xl font-bold">{shipped}</div>
+            <CountUp value={String(shipped)} className="text-2xl font-bold" />
             <div className="text-xs text-muted">projects shipped</div>
           </div>
           {site.highlight && (
             <div>
-              <div className="text-2xl font-bold">{site.highlight.value}</div>
+              <CountUp value={site.highlight.value} className="text-2xl font-bold" />
               <div className="text-xs text-muted">{site.highlight.label}</div>
             </div>
           )}
