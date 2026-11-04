@@ -69,6 +69,12 @@ export const projects: Project[] = [
     learnings:
       "Transfer learning made the biggest jump, from 69.7% for my baseline CNN to 84.3% with an early MobileNetV2, and combining the team's winning ideas got it to 92.99%. A strong test score doesn't guarantee real-world behaviour: the glass tumbler was misclassified because of a domain gap in the dataset. Wiring the model into Streamlit brought its own bugs, so the app needed debugging too, not just the model.",
     links: { github: "https://github.com/Katekar3/waste-classifier" },
+    screenshots: [
+      { src: "/screens/waste-classification/1.png", caption: "Live webcam detection: a notebook held up to the camera is classified as Paper" },
+      { src: "/screens/waste-classification/2.png", caption: "Upload classification: an uploaded cardboard image is classified as Cardboard" },
+      { src: "/screens/waste-classification/3.png", caption: "Live webcam detection: a steel bottle is classified as Metal" },
+      { src: "/screens/waste-classification/4.png", caption: "The Model Specs tab, with the specs of the model" },
+    ],
     growth: {
       title: "Accuracy at three stages",
       steps: [
@@ -133,6 +139,14 @@ export const projects: Project[] = [
       "Free-tier rate limits, solved by auto-rotating to the next model. The agent also got stuck repeating failing tool calls, so I added a loop guard that nudges it first, then stops and asks.",
     learnings:
       "An agent needs guardrails: a safety policy that classifies every tool call, and a loop guard that nudges the agent and then stops to ask when it keeps repeating a failing call. Free-tier rate limits were solved by rotating to the next model automatically. And scoping down to what my hardware could run is what got the project finished.",
+    screenshots: [
+      { src: "/screens/codinagent/1.png", caption: "The home page of the agent UI" },
+      { src: "/screens/codinagent/2.png", caption: "The task queue and the schedules" },
+      { src: "/screens/codinagent/3.png", caption: "A preview of gear 4, one of the 5 selectable gears" },
+      { src: "/screens/codinagent/9.png", caption: "The agent at work in the gear 4 preview" },
+      { src: "/screens/codinagent/8.png", caption: "The live fleet overview, with a meter of the tokens being used" },
+      { src: "/screens/codinagent/6.jpeg", caption: "The agent being controlled from my phone over Telegram" },
+    ],
     ladder: {
       modes: ["SAFE", "ASSISTED", "AUTONOMOUS"],
       note: "Every action is rated, and risky ones wait for approval. HIGH asks in every mode, even AUTONOMOUS, and DENY can't be approved from anywhere, including the phone. In SAFE mode only pure reads (reading files, listing folders, searching, read-only commands like git status) run on their own. If nobody answers an approval, it counts as no. The shell-command rating is heuristic, so this is a safety net, not a guarantee.",
@@ -265,6 +279,13 @@ export const projects: Project[] = [
     learnings:
       "With simulated data, any labels would only come from my own thresholds, so an unsupervised model (Isolation Forest) was the honest choice over a supervised one. I designed the schema and the risk logic by hand, and let AI help with the routine CRUD routes and styling.",
     links: { github: "https://github.com/Katekar3/pitguard" },
+    screenshots: [
+      { src: "/screens/pitguard/1.png", caption: "The landing page" },
+      { src: "/screens/pitguard/2.png", caption: "Live zone monitoring across three separate zones: A, B and C" },
+      { src: "/screens/pitguard/3.png", caption: "Readings clear automatically once they return to normal thresholds" },
+      { src: "/screens/pitguard/4.png", caption: "Worker management: add or delete workers, or edit a worker's status" },
+      { src: "/screens/pitguard/6.png", caption: "Alert history shown as plots" },
+    ],
     diagram: {
       type: "flow",
       nodes: [
@@ -338,6 +359,14 @@ export const projects: Project[] = [
     challenges: "",
     learnings:
       "Together they cover CNNs, DataLoaders, training loops, tokenization, the Trainer API and deployment.",
+    screenshots: [
+      { src: "/screens/ml-portfolio/2.png", caption: "MNIST app: a hand-drawn 9 on the drawing board is recognised" },
+      { src: "/screens/ml-portfolio/3.png", caption: "MNIST app: a hand-drawn 0 is recognised" },
+      { src: "/screens/ml-portfolio/5.png", caption: "Fashion-MNIST app: an uploaded T-shirt image gets a prediction" },
+      { src: "/screens/ml-portfolio/7.png", caption: "Fashion-MNIST app: an uploaded image of a bag gets a prediction" },
+      { src: "/screens/ml-portfolio/8.png", caption: "DistilBERT sentiment app: a positive movie review, with the sentiment predicted" },
+      { src: "/screens/ml-portfolio/9.png", caption: "DistilBERT sentiment app: a second positive movie review, with the sentiment predicted" },
+    ],
     links: {
       github: null,
       extra: [
