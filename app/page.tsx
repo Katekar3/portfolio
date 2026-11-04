@@ -1,6 +1,4 @@
 import Link from "next/link";
-import ProjectCard from "@/components/ProjectCard";
-import { getFeatured } from "@/lib/projects";
 import Timeline from "@/components/Timeline";
 import { site } from "@/data/site";
 
@@ -8,8 +6,6 @@ const pill =
   "rounded-full border border-border px-4 py-2 font-mono text-sm hover:border-muted";
 
 export default function Home() {
-  const featured = getFeatured();
-
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
       {/* Hero: name + one-line intro */}
@@ -21,31 +17,17 @@ export default function Home() {
         )}
       </header>
 
-      {/* Featured projects (any project with featured: true) */}
-      {featured.length > 0 && (
-        <section className="mt-14">
-          <h2 className="mb-4 font-mono text-sm uppercase tracking-widest text-muted">
-            Things I&apos;ve built
-          </h2>
-          <div className="grid gap-6">
-            {featured.map((p) => (
-              <ProjectCard key={p.slug} project={p} />
-            ))}
-          </div>
-          <div className="mt-6">
-            <Link href="/projects" className={pill}>
-              View all projects →
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {/* Timeline: how the projects fit together, oldest to newest */}
-      <section className="mt-16">
+      {/* Timeline: the story, oldest to newest. Cards link to the detail pages. */}
+      <section className="mt-14">
         <h2 className="mb-6 font-mono text-sm uppercase tracking-widest text-muted">
           How I got here
         </h2>
         <Timeline />
+        <div className="mt-8">
+          <Link href="/projects" className={pill}>
+            View all projects →
+          </Link>
+        </div>
       </section>
 
       {/* Currently learning: hidden when the array is empty */}
