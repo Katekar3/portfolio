@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Lightbox from "@/components/Lightbox";
 
 type Shot = { src: string; caption: string };
 
@@ -14,6 +15,7 @@ export default function ScreenshotsScroll({ shots }: { shots: Shot[] }) {
   const outer = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
+  const [open, setOpen] = useState<Shot | null>(null);
   const n = shots.length;
 
   useEffect(() => {
@@ -77,7 +79,8 @@ export default function ScreenshotsScroll({ shots }: { shots: Shot[] }) {
               <img
                 src={s.src}
                 alt={s.caption}
-                className="max-h-full max-w-full rounded-lg object-contain"
+                onClick={() => setOpen(s)}
+                className="max-h-full max-w-full cursor-zoom-in rounded-lg object-contain"
               />
             </div>
           ))}
@@ -111,6 +114,7 @@ export default function ScreenshotsScroll({ shots }: { shots: Shot[] }) {
           </div>
         )}
       </div>
+      <Lightbox shot={open} onClose={() => setOpen(null)} />
     </div>
   );
 }

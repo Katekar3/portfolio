@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Lightbox from "@/components/Lightbox";
 
 type Shot = { src: string; caption: string };
 
@@ -12,6 +13,7 @@ export default function Screenshots({ shots }: { shots: Shot[] }) {
   const scroller = useRef<HTMLDivElement>(null);
   const stopped = useRef(false);
   const [index, setIndex] = useState(0);
+  const [open, setOpen] = useState<Shot | null>(null);
 
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -81,7 +83,8 @@ export default function Screenshots({ shots }: { shots: Shot[] }) {
                   src={s.src}
                   alt={s.caption}
                   loading={i === 0 ? "eager" : "lazy"}
-                  className="max-h-full max-w-full rounded-lg object-contain"
+                  onClick={() => setOpen(s)}
+                  className="max-h-full max-w-full cursor-zoom-in rounded-lg object-contain"
                 />
               </div>
             </figure>
@@ -134,6 +137,7 @@ export default function Screenshots({ shots }: { shots: Shot[] }) {
           ))}
         </div>
       )}
+      <Lightbox shot={open} onClose={() => setOpen(null)} />
     </div>
   );
 }
