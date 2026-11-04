@@ -98,3 +98,33 @@ export default function Home() {
             {site.learning.map((item) => (
               <li
                 key={item.label}
+                className="rounded-2xl border border-border bg-card px-4 py-3"
+              >
+                <div className="font-semibold">{item.label}</div>
+                {item.note && <div className="text-sm text-muted">{item.note}</div>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Links: email, GitHub, LinkedIn, resume (no phone number, ever) */}
+      <section className="mt-16 border-t border-border pt-8">
+        <h2 className="mb-4 font-mono text-sm uppercase tracking-widest text-muted">
+          Say hi
+        </h2>
+        <div className="flex flex-wrap gap-3">
+          <a href={`mailto:${site.links.email}`} className={pill}>
+            Email
+          </a>
+          <a href={site.links.github} target="_blank" rel="noreferrer" className={pill}>
+            GitHub ↗
+          </a>
+          <a href={site.links.linkedin} target="_blank" rel="noreferrer" className={pill}>
+            LinkedIn ↗
+          </a>
+        </div>
+      </section>
+    </main>
+  );
+}
