@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { projects } from "@/data/projects";
 import { getProject } from "@/lib/projects";
 import { Meta, Stat, TechBadges } from "@/components/ProjectCard";
-import FlowDiagram from "@/components/FlowDiagram";
+import AnimatedFlow from "@/components/AnimatedFlow";
 import GrowthStrip from "@/components/GrowthStrip";
 import SafetyLadder from "@/components/SafetyLadder";
 
@@ -107,7 +107,7 @@ export default async function ProjectPage({ params }: Props) {
 
       {p.diagram && (
         <Section title="How it fits together" accent={p.accent}>
-          <FlowDiagram diagram={p.diagram} accent={p.accent} />
+          <AnimatedFlow diagram={p.diagram} accent={p.accent} />
         </Section>
       )}
 
