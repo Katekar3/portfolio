@@ -1,24 +1,62 @@
 import Link from "next/link";
 import Timeline from "@/components/Timeline";
+import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
 const pill =
   "rounded-full border border-border px-4 py-2 font-mono text-sm hover:border-muted";
 
 export default function Home() {
+  // Computed from the data, so it can't go stale
+  const shipped = projects.filter((p) => p.status === "completed").length;
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-16">
-      {/* Hero: name + one-line intro */}
+      {/* Hero */}
       <header>
-        <h1 className="text-4xl font-bold sm:text-5xl">{site.name}</h1>
+        {site.nowBuilding && (
+          <Link
+            href={`/projects/${site.nowBuilding.slug}`}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 font-mono text-xs text-muted hover:border-muted"
+          >
+            <span className="h-2 w-2 rounded-full bg-amber-500" />
+            Now building: {site.nowBuilding.text}
+          </Link>
+        )}
+
+        <h1 className="mt-5 text-4xl font-bold sm:text-5xl">{site.name}</h1>
         <p className="mt-4 max-w-2xl text-lg text-muted">{site.intro}</p>
         {site.availability && (
           <p className="mt-3 font-mono text-sm text-muted">{site.availability}</p>
         )}
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link href="/projects" className={pill}>
+            View projects →
+          </Link>
+          {site.links.resume && (
+            <a href={site.links.resume} target="_blank" rel="noreferrer" className={pill}>
+              Resume ↗
+            </a>
+          )}
+        </div>
+
+        <div className="mt-8 flex flex-wrap gap-6 font-mono">
+          <div>
+            <div className="text-2xl font-bold">{shipped}</div>
+            <div className="text-xs text-muted">projects shipped</div>
+          </div>
+          {site.highlight && (
+            <div>
+              <div className="text-2xl font-bold">{site.highlight.value}</div>
+              <div className="text-xs text-muted">{site.highlight.label}</div>
+            </div>
+          )}
+        </div>
       </header>
 
       {/* Timeline: the story, oldest to newest. Cards link to the detail pages. */}
-      <section className="mt-14">
+      <section className="mt-16">
         <h2 className="mb-6 font-mono text-sm uppercase tracking-widest text-muted">
           How I got here
         </h2>
