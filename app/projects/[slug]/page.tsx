@@ -8,6 +8,7 @@ import { Meta, Stat, TechBadges } from "@/components/ProjectCard";
 import AnimatedFlow from "@/components/AnimatedFlow";
 import GrowthStrip from "@/components/GrowthStrip";
 import SafetyLadder from "@/components/SafetyLadder";
+import Screenshots from "@/components/Screenshots";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -143,15 +144,7 @@ export default async function ProjectPage({ params }: Props) {
       {/* Screens: optional, hidden when empty, always inside a neutral frame */}
       {p.screenshots && p.screenshots.length > 0 && (
         <Section title="Screens" accent={p.accent}>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {p.screenshots.map((s) => (
-              <figure key={s.src} className="rounded-xl border border-border bg-black/30 p-2">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.src} alt={s.caption} className="w-full rounded-lg" />
-                <figcaption className="mt-2 px-1 font-mono text-xs text-muted">{s.caption}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <Screenshots shots={p.screenshots} />
         </Section>
       )}
     </main>
