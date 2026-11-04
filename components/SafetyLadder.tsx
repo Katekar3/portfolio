@@ -1,3 +1,6 @@
+"use client";
+
+import { useAnimeOnView } from "@/components/useAnimeOnView";
 import type { Project } from "@/data/projects";
 
 type Ladder = NonNullable<Project["ladder"]>;
@@ -10,12 +13,32 @@ const labels: Record<Cell, string> = {
   block: "Blocked",
 };
 
-// A static grid: risk level (rows) against autonomy mode (columns). Built only from the data.
+// Grid: risk level (rows) against autonomy mode (columns). Built only from the data.
+// When it scrolls into view, the pills pop in row by row (scale + fade only, no sideways
+// movement, so the table never gets wider and the mobile scroll box stays the same).
 export default function SafetyLadder({ ladder, accent }: { ladder: Ladder; accent: string }) {
+  const ref = useAnimeOnView<HTMLDivElement>((root, { animate }) => {
+    const pills = Array.from(root.querySelectorAll<HTMLElement>("[data-pill]"));
+    pills.forEach((p) => {
+      p.style.opacity = "0";
+      p.style.transform = "scale(0.6)";
+    });
+
+    animate(pills, {
+      opacity: [0, 1],
+      scale: [0.6, 1],
+      // pills come in row-major order, so this reads top-left to bottom-right
+      delay: (_el: unknown, i: number) => i * 70,
+      duration: 500,
+      ease: "outBack",
+    });
+  });
+
   const pill = (cell: Cell) => {
     if (cell === "ask") {
       return (
         <span
+          data-pill
           className="inline-block rounded-full border px-2.5 py-1"
           style={{ borderColor: accent + "66", color: accent }}
         >
@@ -26,6 +49,7 @@ export default function SafetyLadder({ ladder, accent }: { ladder: Ladder; accen
     if (cell === "mixed") {
       return (
         <span
+          data-pill
           className="inline-block rounded-full border border-dashed px-2.5 py-1"
           style={{ borderColor: accent + "66", color: accent }}
         >
@@ -35,20 +59,26 @@ export default function SafetyLadder({ ladder, accent }: { ladder: Ladder; accen
     }
     if (cell === "block") {
       return (
-        <span className="inline-block rounded-full border border-rose-400/40 px-2.5 py-1 text-rose-400">
+        <span
+          data-pill
+          className="inline-block rounded-full border border-rose-400/40 px-2.5 py-1 text-rose-400"
+        >
           {labels[cell]}
         </span>
       );
     }
     return (
-      <span className="inline-block rounded-full border border-border px-2.5 py-1 text-muted">
+      <span
+        data-pill
+        className="inline-block rounded-full border border-border px-2.5 py-1 text-muted"
+      >
         {labels[cell]}
       </span>
     );
   };
 
   return (
-    <div>
+    <div ref={ref}>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[560px] border-separate border-spacing-y-2 text-left font-mono text-xs">
           <thead>
