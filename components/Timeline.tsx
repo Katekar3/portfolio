@@ -30,9 +30,11 @@ export default function Timeline() {
             <Meta p={p} />
             <h3 className="mt-2 text-lg font-semibold">{p.title}</h3>
             <p className="mt-1 text-sm text-muted">{p.tagline}</p>
-            <div className="mt-3 font-mono text-sm" style={{ color: p.accent }}>
-              {p.signatureStat.value}{" "}
-              <span className="text-xs text-muted">{p.signatureStat.label}</span>
+            <div className="mt-3">
+              <div className="font-mono text-sm" style={{ color: p.accent }}>
+                {p.signatureStat.value}
+              </div>
+              <div className="font-mono text-xs text-muted">{p.signatureStat.label}</div>
             </div>
           </Link>
         </li>

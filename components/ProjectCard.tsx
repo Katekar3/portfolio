@@ -92,12 +92,15 @@ export default function ProjectCard({ project: p }: { project: Project }) {
   // FOUNDATION: one compact card
   if (p.tier === "foundation") {
     return (
-      <Link href={href} className={`${base} flex items-center justify-between gap-4 border-border p-4`}>
+      <Link
+        href={href}
+        className={`${base} flex flex-col gap-2 border-border p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4`}
+      >
         <div>
           <h3 className="font-semibold">{p.title}</h3>
           <p className="text-sm text-muted">{p.tagline}</p>
         </div>
-        <span className="font-mono text-sm" style={{ color: p.accent }}>
+        <span className="font-mono text-sm sm:shrink-0 sm:text-right" style={{ color: p.accent }}>
           {p.signatureStat.value}
         </span>
       </Link>
