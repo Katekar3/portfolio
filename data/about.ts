@@ -21,6 +21,7 @@ export const about = {
         "Transfer Learning",
         "OpenCV",
         "Model Evaluation",
+        "YOLO (Ultralytics)",
       ],
     },
     {
