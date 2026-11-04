@@ -4,9 +4,16 @@ import { useState } from "react";
 import Link from "next/link";
 import ProjectCard, { Meta } from "@/components/ProjectCard";
 import { getByTier, getTimeline } from "@/lib/projects";
-import type { Project, Tier } from "@/data/projects";
+import { projects } from "@/data/projects";
+import type { Category, Project, Tier } from "@/data/projects";
 
 type View = "ranked" | "timeline";
+type Match = (p: Project) => boolean;
+
+// A tech tag only becomes a filter chip if at least this many projects use it
+const MIN_TECH_COUNT = 2;
+
+const categoryOrder: Category[] = ["ML", "Web", "Mobile", "Other"];
 
 const sections: { tier: Tier; title: string; grid: string }[] = [
   { tier: "flagship", title: "Flagship", grid: "grid gap-6" },
@@ -14,6 +21,16 @@ const sections: { tier: Tier; title: string; grid: string }[] = [
   { tier: "foundation", title: "Foundations", grid: "grid gap-4" },
   { tier: "upcoming", title: "Upcoming", grid: "grid gap-4" },
 ];
+
+// Chip options are built from the data, so new projects show up automatically
+const categories = categoryOrder.filter((c) => projects.some((p) => p.category === c));
+
+const techCounts = new Map<string, number>();
+projects.forEach((p) => p.tech.forEach((t) => techCounts.set(t, (techCounts.get(t) ?? 0) + 1)));
+const techs = [...techCounts.entries()]
+  .filter(([, n]) => n >= MIN_TECH_COUNT)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([t]) => t);
 
 // dateLabel wins when present ("Ongoing", "Sept 2026"), otherwise month + year
 function whenLabel(p: Project) {
@@ -23,11 +40,28 @@ function whenLabel(p: Project) {
   );
 }
 
-function Ranked() {
+function Chip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className={`rounded-full border px-3 py-1 font-mono text-xs transition ${
+        active
+          ? "border-foreground/60 bg-card text-foreground"
+          : "border-border text-muted hover:border-muted hover:text-foreground"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function Ranked({ match }: { match: Match }) {
   return (
     <>
       {sections.map(({ tier, title, grid }) => {
-        const items = getByTier(tier);
+        const items = getByTier(tier).filter(match);
         if (items.length === 0) return null; // empty tiers hide themselves
         return (
           <section key={tier} className="mt-12">
@@ -44,8 +78,8 @@ function Ranked() {
   );
 }
 
-function Timeline() {
-  const items = getTimeline(); // oldest to newest
+function Timeline({ match }: { match: Match }) {
+  const items = getTimeline().filter(match); // oldest to newest
   return (
     <ol className="relative mt-12 border-l border-border pl-8">
       {items.map((p) => (
@@ -75,8 +109,22 @@ function Timeline() {
 
 export default function ProjectsView() {
   const [view, setView] = useState<View>("ranked");
+  const [category, setCategory] = useState<Category | null>(null);
+  const [tech, setTech] = useState<string | null>(null);
 
-  const btn = (v: View, label: string) => (
+  // One filter function shared by both views. Category AND tech must both match.
+  const match: Match = (p) =>
+    (category === null || p.category === category) && (tech === null || p.tech.includes(tech));
+
+  const shown = projects.filter(match).length;
+  const filtering = category !== null || tech !== null;
+
+  const clear = () => {
+    setCategory(null);
+    setTech(null);
+  };
+
+  const viewBtn = (v: View, label: string) => (
     <button
       type="button"
       onClick={() => setView(v)}
@@ -92,10 +140,57 @@ export default function ProjectsView() {
   return (
     <>
       <div className="mt-6 inline-flex gap-1 rounded-full border border-border p-1">
-        {btn("ranked", "Ranked")}
-        {btn("timeline", "Timeline")}
+        {viewBtn("ranked", "Ranked")}
+        {viewBtn("timeline", "Timeline")}
       </div>
-      {view === "ranked" ? <Ranked /> : <Timeline />}
+
+      {/* Filters */}
+      <div className="mt-6 space-y-3">
+        {categories.length > 1 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="w-16 font-mono text-xs uppercase tracking-widest text-muted">Type</span>
+            {categories.map((c) => (
+              <Chip
+                key={c}
+                label={c}
+                active={category === c}
+                onClick={() => setCategory(category === c ? null : c)}
+              />
+            ))}
+          </div>
+        )}
+        {techs.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="w-16 font-mono text-xs uppercase tracking-widest text-muted">Tech</span>
+            {techs.map((t) => (
+              <Chip key={t} label={t} active={tech === t} onClick={() => setTech(tech === t ? null : t)} />
+            ))}
+          </div>
+        )}
+        {filtering && (
+          <div className="flex items-center gap-3 font-mono text-xs text-muted">
+            <span>
+              Showing {shown} of {projects.length}
+            </span>
+            <button type="button" onClick={clear} className="underline hover:text-foreground">
+              Clear filters
+            </button>
+          </div>
+        )}
+      </div>
+
+      {shown === 0 ? (
+        <p className="mt-12 font-mono text-sm text-muted">
+          Nothing matches that combo yet.{" "}
+          <button type="button" onClick={clear} className="underline hover:text-foreground">
+            Clear filters
+          </button>
+        </p>
+      ) : view === "ranked" ? (
+        <Ranked match={match} />
+      ) : (
+        <Timeline match={match} />
+      )}
     </>
   );
 }
