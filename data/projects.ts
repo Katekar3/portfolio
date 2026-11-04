@@ -159,7 +159,7 @@ export const projects: Project[] = [
         },
       ],
     },
-    links: { github: "https://github.com/Katekar3/coding-agent" },
+    links: { github: null },
     diagram: {
       type: "flow",
       nodes: [
