@@ -9,6 +9,7 @@ import AnimatedFlow from "@/components/AnimatedFlow";
 import GrowthStrip from "@/components/GrowthStrip";
 import SafetyLadder from "@/components/SafetyLadder";
 import Screenshots from "@/components/Screenshots";
+import ScreenshotsScroll from "@/components/ScreenshotsScroll";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -144,7 +145,12 @@ export default async function ProjectPage({ params }: Props) {
       {/* Screens: optional, hidden when empty, always inside a neutral frame */}
       {p.screenshots && p.screenshots.length > 0 && (
         <Section title="Screens" accent={p.accent}>
-          <Screenshots shots={p.screenshots} />
+          <div className="lg:hidden">
+            <Screenshots shots={p.screenshots} />
+          </div>
+          <div className="hidden lg:block">
+            <ScreenshotsScroll shots={p.screenshots} />
+          </div>
         </Section>
       )}
     </main>
