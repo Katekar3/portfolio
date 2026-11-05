@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CountUp from "@/components/CountUp";
+import EmailActions from "@/components/EmailActions";
 import Hero3D from "@/components/hero3d/Hero3D";
 import Reveal from "@/components/Reveal";
 import Timeline from "@/components/Timeline";
@@ -128,9 +129,7 @@ export default function Home() {
           Say hi
         </h2>
         <div className="flex flex-wrap gap-3">
-          <a href={`mailto:${site.links.email}`} className={pill}>
-            Email
-          </a>
+          <EmailActions email={site.links.email} className={pill} />
           <a href={site.links.github} target="_blank" rel="noreferrer" className={pill}>
             GitHub ↗
           </a>
