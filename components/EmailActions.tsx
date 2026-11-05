@@ -2,12 +2,21 @@
 
 import { useState } from "react";
 
-// Three ways to reach me, because a plain mailto: link does nothing on devices
+// Ways to reach me, because a plain mailto: link does nothing on devices
 // with no default mail app (very common on desktops that use Gmail in the browser).
-// - Email: normal mailto (works on phones and with a mail app)
+// - Email: normal mailto (works on phones and with a mail app). Hide with showMailto={false}
+//   when the page already has its own mailto link.
 // - Gmail: opens Gmail's compose window in a new tab with my address filled in
 // - Copy: copies the address, always works
-export default function EmailActions({ email, className }: { email: string; className: string }) {
+export default function EmailActions({
+  email,
+  className,
+  showMailto = true,
+}: {
+  email: string;
+  className: string;
+  showMailto?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
   const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
 
@@ -24,9 +33,11 @@ export default function EmailActions({ email, className }: { email: string; clas
 
   return (
     <>
-      <a href={`mailto:${email}`} className={className}>
-        Email
-      </a>
+      {showMailto && (
+        <a href={`mailto:${email}`} className={className}>
+          Email
+        </a>
+      )}
       <a href={gmail} target="_blank" rel="noreferrer" className={className}>
         Gmail ↗
       </a>

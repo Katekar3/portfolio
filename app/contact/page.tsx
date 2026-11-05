@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import EmailActions from "@/components/EmailActions";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = { title: "Contact | Yashmit Katekar" };
@@ -19,12 +20,18 @@ export default function ContactPage() {
         Drop me an email, or find me on GitHub and LinkedIn.
       </p>
 
+      {/* The card is the normal mailto link (works on phones and with a mail app) */}
       <a
         href={`mailto:${site.links.email}`}
         className="mt-8 inline-block rounded-2xl border border-border bg-card px-6 py-4 font-mono text-lg transition hover:border-muted"
       >
         {site.links.email}
       </a>
+
+      {/* No mail app set up? These two always work */}
+      <div className="mt-3 flex flex-wrap gap-3">
+        <EmailActions email={site.links.email} className={pill} showMailto={false} />
+      </div>
 
       <div className="mt-6 flex flex-wrap gap-3">
         <a href={site.links.github} target="_blank" rel="noreferrer" className={pill}>
